@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<zbdh></zbdh>
+		<!-- <zbdh></zbdh> -->
 		<template>
 			<div>
 				<el-button type="primary" @click="dialogVisible=true">添加分类</el-button>
@@ -36,6 +36,8 @@
 						</template>
 					</el-table-column>
 				</el-table>
+				
+				
 				<!-- 对话框 添加 -->
 
 
@@ -62,7 +64,7 @@
 					</el-form>
 					<span slot="footer" class="dialog-footer">
 						<el-button @click="dialogVisible = false">取 消</el-button>
-						<el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+						<el-button type="primary" @click="update">确 定</el-button>
 					</span>
 				</el-dialog>
 			</div>
@@ -107,28 +109,52 @@
 			}
 		},
 		methods: {
+			update(){
+				this.dialogVisible = false;
+				this.tableData[this.idx].date = this.updatefenlei.name;
+				console.log(this.idx);
+			},
 			handleSelectionChange(val) {
 				this.multipleSelection = val;
 			},
 			handleEdit(index, row) {
+				this.idx = index;
 				this.dialogVisible = true;
 				this.updatefenlei.name = row.date;
 				console.log(index, row);
 			},
 			deleteRow(index, rows) {
-				this.$confirm('确认删除此分类?如果此分类下关联有商品，将会部除失败!')
-					.then(() => {
+				console.log(index, rows);
+				// this.$confirm('确认删除此分类?如果此分类下关联有商品，将会部除失败!')
+				// 	.then(() => {
+				// 		rows.splice(index, 1);
+				// 	})
+				// 	.catch(() => {
+
+				// 	});
+				const confirmText = ['确认删除此分类?', '如果此分类下关联有商品，将会部除失败!']
+				const newDatas = []
+				const h = this.$createElement
+				for (const i in confirmText) {
+					newDatas.push(h('p', null, confirmText[i]))
+				}
+				this.$confirm(
+					'提示', {
+						title: '提示',
+						message: h('div', null, newDatas),
+						showCancelButton: true,
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						// type: 'warning'
+					}).then(() => {
 						rows.splice(index, 1);
 					})
-					.catch(() => {
-						
-					});
 			},
 			handleClose() {
 				this.dialogVisible = false
 			}
 		},
-		components:{
+		components: {
 			// zbdh
 		}
 	}

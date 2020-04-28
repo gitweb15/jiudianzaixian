@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import commodity_fenlei from '../views/commodity_fenlei.vue'
+// import commodity_fenlei from '../views/commodity_fenlei.vue'
+import commoidty_list from '../views/commodity_list.vue'
 Vue.use(VueRouter)
 
   const routes = [
   {
     path: '/',
     name: 'commodity_fenlei',
-    component: commodity_fenlei
+    component: commoidty_list
   },
   {
     path: '/about',
